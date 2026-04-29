@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dave Fernandes — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F1;
+    --white: #FFFFFF;
+    --black: #0D0D0D;
+    --gray: #6B6B6B;
+    --light-gray: #E2DED8;
+    --accent: #C8503A;
+    --accent-light: #F2EAE7;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(247,245,241,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.06em;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--black); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--light-gray);
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 4rem 4rem;
+    background: var(--white);
+  }
+
+  .hero-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 9vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    color: var(--black);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--gray);
+    max-width: 380px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 0.85rem 2.5rem;
+    border: 1px solid var(--black);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s;
+    width: fit-content;
+  }
+
+  .hero-cta:hover { background: var(--black); color: var(--white); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 4rem 4rem;
+    background: var(--bg);
+    border-left: 1px solid var(--light-gray);
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--black);
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 0.3rem;
+    font-weight: 400;
+  }
+
+  .hero-location {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    border-top: 1px solid var(--light-gray);
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 7rem 4rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--black);
+    margin-bottom: 4rem;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--white);
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--gray);
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-text p strong { color: var(--black); font-weight: 500; }
+
+  .about-info { display: flex; flex-direction: column; gap: 0; }
+
+  .info-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .info-row:first-child { border-top: 1px solid var(--light-gray); }
+
+  .info-key {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    min-width: 100px;
+    font-weight: 400;
+  }
+
+  .info-val {
+    font-size: 0.95rem;
+    color: var(--black);
+    font-weight: 400;
+  }
+
+  .info-val a { color: var(--accent); text-decoration: none; }
+  .info-val a:hover { text-decoration: underline; }
+
+  /* ── PROJECTS ── */
+  #projects {
+    background: var(--bg);
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--light-gray);
+  }
+
+  .project-card {
+    padding: 2.5rem;
+    border-right: 1px solid var(--light-gray);
+    background: var(--white);
+    transition: background 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .project-card:last-child { border-right: none; }
+  .project-card:hover { background: var(--black); }
+  .project-card:hover .project-num,
+  .project-card:hover .project-title,
+  .project-card:hover .project-desc,
+  .project-card:hover .project-tag { color: var(--white); }
+  .project-card:hover { border-color: var(--black); }
+
+  .project-num {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--light-gray);
+    letter-spacing: 0.06em;
+    transition: color 0.25s;
+  }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    letter-spacing: 0.02em;
+    color: var(--black);
+    line-height: 1.1;
+    transition: color 0.25s;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.65;
+    font-weight: 300;
+    flex: 1;
+    transition: color 0.25s;
+  }
+
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+
+  .project-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--light-gray);
+    color: var(--gray);
+    transition: color 0.25s, border-color 0.25s;
+  }
+
+  .project-card:hover .project-tag { border-color: rgba(255,255,255,0.25); }
+
+  /* ── SKILLS / SERVICES ── */
+  #services {
+    background: var(--white);
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem 2rem;
+  }
+
+  .service-item {}
+
+  .service-icon {
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+    color: var(--black);
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+
+  .service-desc {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── RESUME ── */
+  #resume {
+    background: var(--bg);
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .resume-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+
+  .resume-col-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .timeline { display: flex; flex-direction: column; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-year {
+    font-size: 0.75rem;
+    color: var(--gray);
+    font-weight: 400;
+    padding-top: 0.2rem;
+  }
+
+  .timeline-content {}
+
+  .timeline-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--black);
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-org {
+    font-size: 0.82rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .timeline-desc {
+    font-size: 0.83rem;
+    color: var(--gray);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* Skills bars */
+  .skill-list { display: flex; flex-direction: column; gap: 0; }
+
+  .skill-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .skill-name {
+    font-size: 0.9rem;
+    color: var(--black);
+    font-weight: 400;
+  }
+
+  .skill-pills { display: flex; gap: 0.4rem; }
+
+  .pill {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--light-gray);
+  }
+
+  .pill.filled { background: var(--accent); }
+
+  /* Courses */
+  .courses-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .course-tag {
+    padding: 0.6rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    font-size: 0.78rem;
+    color: var(--gray);
+    font-weight: 400;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--black);
+    border-bottom: none;
+  }
+
+  #contact .section-label { color: var(--accent); }
+  #contact .section-heading { color: var(--white); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: end;
+  }
+
+  .contact-text {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 420px;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 0; }
+
+  .contact-link-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    transition: padding-left 0.25s;
+  }
+
+  .contact-link-row:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+  .contact-link-row:hover { padding-left: 0.75rem; }
+
+  .contact-link-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .contact-link-value {
+    font-size: 0.95rem;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .contact-arrow { color: rgba(255,255,255,0.3); font-size: 1.1rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Dave Fernandes</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#services">Skills</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Available for opportunities</p>
+    <h1 class="hero-name">Dave<br>Fernandes</h1>
+    <p class="hero-desc">
+      MCA student & aspiring developer with a curiosity for technology, problem-solving, and building things that matter. Based in Pune, India.
+    </p>
+    <a href="#contact" class="hero-cta">Get in touch →</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7.1</div>
+        <div class="stat-label">BCA GPA</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Courses Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Languages</div>
+      </div>
+    </div>
+    <div class="hero-location">
+      <span class="dot"></span>
+      Pune, Maharashtra, India
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label reveal">About me</p>
+  <h2 class="section-heading reveal reveal-delay-1">Who I am</h2>
+  <div class="about-grid">
+    <div class="about-text reveal reveal-delay-1">
+      <p>
+        I'm <strong>Dave Fernandes</strong>, a first-year MCA student at Trinity College, Pune, with a BCA from SICSR — Symbiosis Institute of Computer Studies and Research. I'm applying as a fresher, eager to learn and grow.
+      </p>
+      <p>
+        I'm someone who brings <strong>strong communication skills, teamwork, and genuine curiosity</strong> to everything I do. Whether it's writing code, debugging a project, or brainstorming ideas, I show up with a positive mindset and a drive to be an asset.
+      </p>
+      <p>
+        Outside of tech, I'm into <strong>powerlifting, basketball, origami, and reading self-help books</strong>. I believe health and mental well-being go hand in hand with doing great work.
+      </p>
+    </div>
+    <div class="about-info reveal reveal-delay-2">
+      <div class="info-row">
+        <span class="info-key">Status</span>
+        <span class="info-val">MCA 1st Year, Fresher</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Location</span>
+        <span class="info-val">Pune, Maharashtra, India</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Email</span>
+        <span class="info-val"><a href="mailto:Davefernsbinance@gmail.com">Davefernsbinance@gmail.com</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Phone</span>
+        <span class="info-val">+91 88885 68560</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">LinkedIn</span>
+        <span class="info-val"><a href="https://www.linkedin.com/in/dave-fernandes2003" target="_blank">dave-fernandes2003</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Languages</span>
+        <span class="info-val">English, Hindi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label reveal">Work</p>
+  <h2 class="section-heading reveal reveal-delay-1">Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card reveal reveal-delay-1">
+      <div class="project-num">01</div>
+      <div class="project-title">Flappy Bird Clone</div>
+      <p class="project-desc">
+        A year-end Android game application built as a Flappy Bird clone. Developed using Android Studio, covering game logic, UI design, and mobile interaction patterns.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Android Studio</span>
+        <span class="project-tag">Java</span>
+        <span class="project-tag">Game Dev</span>
+      </div>
+    </div>
+    <div class="project-card reveal reveal-delay-2">
+      <div class="project-num">02</div>
+      <div class="project-title">AutoMarket Website</div>
+      <p class="project-desc">
+        A fully designed website for pre-owned automobile buying and selling. Built with HTML and CSS, focusing on clean UI layout, product listing pages, and usability.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">HTML</span>
+        <span class="project-tag">CSS</span>
+        <span class="project-tag">UI Design</span>
+      </div>
+    </div>
+    <div class="project-card reveal reveal-delay-3">
+      <div class="project-num">03</div>
+      <div class="project-title">Blog Website</div>
+      <p class="project-desc">
+        A collaborative group project — a multi-page blog website designed and built from scratch using HTML and CSS, with attention to typography, layout, and content structure.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">HTML</span>
+        <span class="project-tag">CSS</span>
+        <span class="project-tag">Teamwork</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS / SERVICES -->
+<section id="services">
+  <p class="section-label reveal">Capabilities</p>
+  <h2 class="section-heading reveal reveal-delay-1">What I bring</h2>
+  <div class="services-grid">
+    <div class="service-item reveal reveal-delay-1">
+      <div class="service-icon"></div>
+      <div class="service-title">Frontend Development</div>
+      <p class="service-desc">Building responsive, user-friendly web interfaces using HTML, CSS, and React.js. Comfort with both design aesthetics and clean markup.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-2">
+      <div class="service-icon"></div>
+      <div class="service-title">Backend & Programming</div>
+      <p class="service-desc">Proficient in Python and Java with a solid grounding in Object-Oriented Programming, scripting, and problem-solving fundamentals.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-3">
+      <div class="service-icon"></div>
+      <div class="service-title">3D & Design Tools</div>
+      <p class="service-desc">Hands-on experience with Blender 3D for basic modelling, Canva for visual design, and foundational Photoshop skills for creative work.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-1">
+      <div class="service-icon"></div>
+      <div class="service-title">AI & Automation</div>
+      <p class="service-desc">Completed courses in Generative AI, Prompt Engineering, and Selenium IDE for test automation — exploring the intersection of AI and modern development.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-2">
+      <div class="service-icon"></div>
+      <div class="service-title">Mobile Development</div>
+      <p class="service-desc">Built an Android application using Android Studio, gaining practical exposure to mobile UI/UX patterns and app lifecycle management.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-3">
+      <div class="service-icon"></div>
+      <div class="service-title">Soft Skills</div>
+      <p class="service-desc">Strong communicator, team player, and problem-solver. Experience in youth counselling and social volunteering — bringing empathy and clarity to every project.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <p class="section-label reveal">Background</p>
+  <h2 class="section-heading reveal reveal-delay-1">Resume</h2>
+  <div class="resume-grid">
+    <!-- Education -->
+    <div>
+      <div class="resume-col-title reveal">Education</div>
+      <div class="timeline">
+        <div class="timeline-item reveal reveal-delay-1">
+          <div class="timeline-year">2024 – Present</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Masters of Computer Application</div>
+            <div class="timeline-org">Trinity College, Pune</div>
+            <div class="timeline-desc">MCA — 1st Year, currently pursuing.</div>
+          </div>
+        </div>
+        <div class="timeline-item reveal reveal-delay-2">
+          <div class="timeline-year">2021 – 2024</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Bachelors of Computer Application</div>
+            <div class="timeline-org">SICSR, Symbiosis — Pune</div>
+            <div class="timeline-desc">BCA with a 7.1 GPA. June 2024 passout.</div>
+          </div>
+        </div>
+        <div class="timeline-item reveal reveal-delay-3">
+          <div class="timeline-year">12th Std</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Higher Secondary Certificate</div>
+            <div class="timeline-org">St. Vincent's College, Pune</div>
+            <div class="timeline-desc">First class with Distinction — 77.14%</div>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-year">10th Std</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Secondary School Certificate</div>
+            <div class="timeline-org">St. Vincent's High School, Pune</div>
+            <div class="timeline-desc">First class — 65.80%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills & Courses -->
+    <div>
+      <div class="resume-col-title reveal">Technical Skills</div>
+      <div class="skill-list reveal reveal-delay-1">
+        <div class="skill-row">
+          <span class="skill-name">Python</span>
+          <div class="skill-pills">
+            <div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">HTML & CSS</span>
+          <div class="skill-pills">
+            <div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Java / OOP</span>
+          <div class="skill-pills">
+            <div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div><div class="pill"></div>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">React.js</span>
+          <div class="skill-pills">
+            <div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div><div class="pill"></div>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Blender 3D</span>
+          <div class="skill-pills">
+            <div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div><div class="pill"></div><div class="pill"></div>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Microsoft Office</span>
+          <div class="skill-pills">
+            <div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="resume-col-title reveal" style="margin-top: 3rem;">Courses & Certifications</div>
+      <div class="courses-grid reveal reveal-delay-1">
+        <div class="course-tag">Generative AI & Prompt Engineering</div>
+        <div class="course-tag">Python Bootcamp (2024)</div>
+        <div class="course-tag">The Complete Guide to React.js</div>
+        <div class="course-tag">Basics of Blender 3D</div>
+        <div class="course-tag">Selenium IDE — Test Automation</div>
+        <div class="course-tag">Android Studio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">Let's connect</p>
+  <h2 class="section-heading reveal reveal-delay-1">Get in touch</h2>
+  <div class="contact-grid">
+    <p class="contact-text reveal reveal-delay-1">
+      I'm currently open to internships, entry-level roles, and freelance opportunities. If you think we'd be a good fit, I'd love to hear from you.
+    </p>
+    <div class="contact-links reveal reveal-delay-2">
+      <a class="contact-link-row" href="mailto:Davefernsbinance@gmail.com">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value">Davefernsbinance@gmail.com</span>
+        <span class="contact-arrow">→</span>
+      </a>
+      <a class="contact-link-row" href="tel:+918888568560">
+        <span class="contact-link-label">Phone</span>
+        <span class="contact-link-value">+91 88885 68560</span>
+        <span class="contact-arrow">→</span>
+      </a>
+      <a class="contact-link-row" href="https://www.linkedin.com/in/dave-fernandes2003" target="_blank">
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-value">dave-fernandes2003</span>
+        <span class="contact-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2025 Dave Fernandes. All rights reserved.</span>
+  <span class="footer-name">Dave Fernandes</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
