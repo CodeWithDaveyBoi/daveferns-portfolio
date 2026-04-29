@@ -1,0 +1,883 @@
+/* ============================================================
+   DAVE FERNANDES — PORTFOLIO STYLESHEET
+   style.css
+   ------------------------------------------------------------
+   TABLE OF CONTENTS
+   1.  RESET & ROOT VARIABLES
+   2.  BASE / BODY
+   3.  NAVIGATION (desktop)
+   4.  NAVIGATION (hamburger button)
+   5.  NAVIGATION (mobile drawer)
+   6.  HERO — layout
+   7.  HERO — left column (name, bio, quote)
+   8.  HERO — right column (completed projects)
+   9.  HERO — right column (currently working on)
+   10. HERO — right column (stats & location)
+   11. SECTION SHARED STYLES
+   12. ABOUT SECTION
+   13. PROJECTS SECTION
+   14. SKILLS SECTION
+   15. RESUME SECTION — education timeline
+   16. RESUME SECTION — skills & courses
+   17. CONTACT SECTION
+   18. FOOTER
+   19. SCROLL REVEAL ANIMATION
+   20. RESPONSIVE — tablet (max 1023px)
+   21. RESPONSIVE — mobile (max 767px)
+   ============================================================ */
+
+
+/* ============================================================
+   1. RESET & ROOT VARIABLES
+   — Edit colours and fonts here to restyle the whole site
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Colours */
+  --bg:         #F7F5F1;   /* off-white page background      */
+  --white:      #FFFFFF;   /* pure white (cards, left hero)   */
+  --black:      #0D0D0D;   /* near-black for headings/text    */
+  --gray:       #6B6B6B;   /* body copy & labels              */
+  --light-gray: #E2DED8;   /* borders & dividers              */
+  --accent:     #C8503A;   /* terracotta — labels, highlights */
+
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;  /* headings & big numbers */
+  --font-body:    'DM Sans', sans-serif;     /* all body copy          */
+}
+
+
+/* ============================================================
+   2. BASE / BODY
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   3. NAVIGATION — desktop
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 4rem;
+  background: rgba(247, 245, 241, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+  color: var(--black);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-links a:hover { color: var(--black); }
+
+
+/* ============================================================
+   4. NAVIGATION — hamburger button (hidden on desktop)
+   ============================================================ */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 6px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--black);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X animation when menu is open */
+.hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+
+/* ============================================================
+   5. NAVIGATION — mobile slide-down drawer
+   ============================================================ */
+.mobile-drawer {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 190;
+  background: rgba(247, 245, 241, 0.99);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 5rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-110%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.mobile-drawer.open { transform: translateY(0); }
+
+.mobile-drawer a {
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--light-gray);
+  transition: color 0.2s;
+}
+
+.mobile-drawer a:last-child { border-bottom: none; }
+.mobile-drawer a:hover { color: var(--black); }
+
+
+/* ============================================================
+   6. HERO — overall layout (two-column grid)
+   ============================================================ */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+
+/* ============================================================
+   7. HERO — left column (name, bio, CTA, quote)
+   ============================================================ */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;   /* pushes quote to the bottom */
+  padding: 8rem 4rem 4rem;
+  background: var(--white);
+  min-width: 0;
+}
+
+/* "Available for opportunities" badge */
+.hero-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+/* Large display name */
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 7vw, 9rem);
+  line-height: 0.92;
+  color: var(--black);
+  margin-bottom: 2.5rem;
+  word-break: break-word;
+}
+
+/* Short bio paragraph */
+.hero-desc {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--gray);
+  max-width: 380px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+/* "Get in touch" button */
+.hero-cta {
+  display: inline-block;
+  padding: 0.85rem 2.5rem;
+  border: 1px solid var(--black);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--black);
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+  width: fit-content;
+}
+
+.hero-cta:hover { background: var(--black); color: var(--white); }
+
+/* Motivational quote pinned to the bottom-left */
+.hero-quote {
+  border-top: 1px solid var(--light-gray);
+  padding-top: 1.75rem;
+  margin-top: auto;
+}
+
+.hero-quote blockquote {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--black);
+  font-weight: 300;
+  font-style: italic;
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+/* Terracotta vertical bar beside the quote */
+.hero-quote blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: var(--accent);
+}
+
+.hero-quote cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-style: normal;
+  padding-left: 1.1rem;
+}
+
+
+/* ============================================================
+   8. HERO — right column — completed project links
+   — To add a new project: duplicate an .hc-row block in HTML
+   ============================================================ */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8rem 4rem 4rem;
+  background: var(--bg);
+  border-left: 1px solid var(--light-gray);
+  min-width: 0;
+}
+
+.hero-completed {
+  margin-bottom: 1.25rem;
+}
+
+.hc-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 500;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+/* Each clickable project row */
+.hc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--light-gray);
+  text-decoration: none;
+  gap: 1rem;
+  transition: padding-left 0.2s;
+}
+
+.hc-row:hover               { padding-left: 0.4rem; }
+.hc-row:hover .hc-title     { color: var(--accent); }
+.hc-row:hover .hc-arrow     { color: var(--accent); transform: translate(2px, -2px); }
+
+.hc-left { min-width: 0; }
+
+.hc-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 0.2rem;
+  transition: color 0.2s;
+}
+
+.hc-meta {
+  font-size: 0.73rem;
+  color: var(--gray);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.hc-arrow {
+  color: var(--light-gray);
+  flex-shrink: 0;
+  transition: color 0.2s, transform 0.2s;
+}
+
+
+/* ============================================================
+   9. HERO — right column — "Currently Working On" card
+   — Update .wip-item entries in HTML as projects change
+   ============================================================ */
+.hero-wip {
+  padding: 2rem;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  margin-bottom: 1.25rem;
+}
+
+.wip-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+/* Animated pulsing dot */
+.wip-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.wip-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  animation: pulse 2s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2);   opacity: 0;   }
+}
+
+/* Individual "in progress" item */
+.wip-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.wip-item:last-child  { border-bottom: none; padding-bottom: 0; }
+.wip-item:first-of-type { padding-top: 0; }
+
+.wip-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 0.2rem;
+}
+
+.wip-desc {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   10. HERO — right column — stats grid & location tag
+   ============================================================ */
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--black);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 0.3rem;
+}
+
+.hero-location {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  border-top: 1px solid var(--light-gray);
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Small coloured dot indicator */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+
+/* ============================================================
+   11. SECTION SHARED STYLES
+   — Applies to About, Projects, Skills, Resume, Contact
+   ============================================================ */
+section { padding: 7rem 4rem; }
+
+/* Small uppercase label above each heading e.g. "About me" */
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Large section heading e.g. "Who I am" */
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: 4rem;
+}
+
+
+/* ============================================================
+   12. ABOUT SECTION
+   — Left: bio paragraphs | Right: key info rows
+   ============================================================ */
+#about {
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.about-text p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--gray);
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+}
+
+.about-text p strong { color: var(--black); font-weight: 500; }
+
+/* Key–value info rows (Status, Email, LinkedIn etc.) */
+.info-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.info-row:first-child { border-top: 1px solid var(--light-gray); }
+
+.info-key {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  min-width: 90px;
+  flex-shrink: 0;
+}
+
+.info-val { font-size: 0.95rem; color: var(--black); }
+.info-val a { color: var(--accent); text-decoration: none; }
+.info-val a:hover { text-decoration: underline; }
+
+
+/* ============================================================
+   13. PROJECTS SECTION
+   — Three-column card grid; cards invert on hover
+   — To add a project: duplicate a .project-card block in HTML
+   ============================================================ */
+#projects {
+  background: var(--bg);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--light-gray);
+}
+
+.project-card {
+  padding: 2.5rem;
+  border-right: 1px solid var(--light-gray);
+  background: var(--white);
+  transition: background 0.25s;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project-card:last-child { border-right: none; }
+
+/* Hover: card goes dark */
+.project-card:hover                  { background: var(--black); }
+.project-card:hover .project-num,
+.project-card:hover .project-title,
+.project-card:hover .project-desc    { color: var(--white); }
+.project-card:hover .project-tag     { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.2); }
+
+.project-num   { font-family: var(--font-display); font-size: 1rem; color: var(--light-gray); letter-spacing: 0.06em; transition: color 0.25s; }
+.project-title { font-family: var(--font-display); font-size: 1.75rem; color: var(--black); line-height: 1.1; transition: color 0.25s; }
+.project-desc  { font-size: 0.88rem; color: var(--gray); line-height: 1.65; font-weight: 300; flex: 1; transition: color 0.25s; }
+.project-tags  { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+
+/* Small tech-stack pill tags */
+.project-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--light-gray);
+  color: var(--gray);
+  transition: color 0.25s, border-color 0.25s;
+}
+
+
+/* ============================================================
+   14. SKILLS SECTION
+   — Six capability tiles in a 3-column grid
+   — To add a skill: duplicate a .service-item block in HTML
+   ============================================================ */
+#services {
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 2.5rem;
+}
+
+/* Terracotta accent line above each skill title */
+.service-icon   { width: 40px; height: 2px; background: var(--accent); margin-bottom: 1.25rem; }
+.service-title  { font-family: var(--font-display); font-size: 1.4rem; color: var(--black); margin-bottom: 0.75rem; line-height: 1.1; }
+.service-desc   { font-size: 0.85rem; color: var(--gray); line-height: 1.7; font-weight: 300; }
+
+
+/* ============================================================
+   15. RESUME SECTION — education timeline
+   — To add a new entry: duplicate a .timeline-item in HTML
+   ============================================================ */
+#resume {
+  background: var(--bg);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.resume-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+
+/* Column heading ("Education", "Technical Skills") */
+.resume-col-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+/* Single education entry row */
+.timeline-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1.25rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.timeline-item:last-child { border-bottom: none; }
+
+.timeline-year  { font-size: 0.75rem; color: var(--gray); padding-top: 0.2rem; }
+.timeline-title { font-size: 1rem; font-weight: 500; color: var(--black); margin-bottom: 0.2rem; }
+.timeline-org   { font-size: 0.82rem; color: var(--accent); margin-bottom: 0.4rem; }
+.timeline-desc  { font-size: 0.83rem; color: var(--gray); font-weight: 300; line-height: 1.6; }
+
+
+/* ============================================================
+   16. RESUME SECTION — skill bars & course tags
+   — Pill count (out of 5) reflects proficiency level
+   — To add a skill: duplicate a .skill-row in HTML
+   — To add a course: duplicate a .course-tag in HTML
+   ============================================================ */
+
+/* Skill proficiency rows */
+.skill-row  { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; border-bottom: 1px solid var(--light-gray); }
+.skill-name { font-size: 0.9rem; color: var(--black); }
+.skill-pills { display: flex; gap: 0.4rem; }
+
+/* Individual dot — add class "filled" to colour it */
+.pill        { width: 8px; height: 8px; border-radius: 50%; background: var(--light-gray); }
+.pill.filled { background: var(--accent); }
+
+/* Courses & certifications grid */
+.courses-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.course-tag {
+  padding: 0.6rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+
+/* ============================================================
+   17. CONTACT SECTION
+   — Dark background; left: tagline | right: clickable links
+   — To add a contact method: duplicate a .contact-link-row in HTML
+   ============================================================ */
+#contact { background: var(--black); }
+#contact .section-label  { color: var(--accent); }
+#contact .section-heading { color: var(--white); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: end;
+}
+
+.contact-text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+/* Each contact link row (email, phone, LinkedIn) */
+.contact-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  transition: padding-left 0.25s;
+}
+
+.contact-link-row:first-child { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.contact-link-row:hover       { padding-left: 0.75rem; }
+
+.contact-link-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+.contact-link-value { font-size: 0.92rem; color: var(--white); text-align: right; word-break: break-all; }
+.contact-arrow      { color: rgba(255,255,255,0.3); flex-shrink: 0; }
+
+
+/* ============================================================
+   18. FOOTER
+   ============================================================ */
+footer {
+  background: var(--black);
+  padding: 2rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+.footer-name { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); }
+
+
+/* ============================================================
+   19. SCROLL REVEAL ANIMATION
+   — Elements with class "reveal" fade up when scrolled into view
+   — JS in index.html adds class "visible" via IntersectionObserver
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.visible { opacity: 1; transform: none; }
+
+/* Staggered delays for sequential reveals */
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+
+/* ============================================================
+   20. RESPONSIVE — TABLET (max-width: 1023px)
+   — Two-column hero stacks; grids drop to 2 columns
+   ============================================================ */
+@media (max-width: 1023px) {
+  nav     { padding: 1.1rem 2rem; }
+  section { padding: 5rem 2.5rem; }
+
+  /* Hero stacks to single column */
+  #hero         { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left    { padding: 7rem 2.5rem 3rem; }
+  .hero-right   { padding: 3rem 2.5rem 4rem; border-left: none; border-top: 1px solid var(--light-gray); }
+  .hero-name    { font-size: clamp(4rem, 11vw, 7rem); }
+
+  /* About stacks */
+  .about-grid   { grid-template-columns: 1fr; gap: 3rem; }
+
+  /* Projects → 2 columns, 3rd spans full width */
+  .projects-grid                { grid-template-columns: 1fr 1fr; }
+  .project-card:nth-child(2)    { border-right: none; }
+  .project-card:nth-child(3)    { grid-column: 1 / -1; border-top: 1px solid var(--light-gray); border-right: none; }
+
+  /* Skills → 2 columns */
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 2rem; }
+
+  /* Resume & contact stack */
+  .resume-grid  { grid-template-columns: 1fr; gap: 3.5rem; }
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  footer { padding: 1.75rem 2.5rem; }
+}
+
+
+/* ============================================================
+   21. RESPONSIVE — MOBILE (max-width: 767px)
+   — All grids stack; hamburger nav shown; type scales down
+   ============================================================ */
+@media (max-width: 767px) {
+  /* Nav: hide links, show hamburger */
+  nav            { padding: 1rem 1.25rem; }
+  .nav-links     { display: none !important; }
+  .hamburger     { display: flex; }
+
+  section        { padding: 3.5rem 1.25rem; }
+  .section-heading { margin-bottom: 2rem; }
+
+  /* Hero */
+  #hero          { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left     { padding: 5.5rem 1.25rem 2.5rem; width: 100%; }
+
+  .hero-name {
+    font-size: clamp(3rem, 14vw, 4.5rem);
+    margin-bottom: 1.5rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .hero-desc  { font-size: 0.95rem; margin-bottom: 2rem; max-width: 100%; }
+  .hero-cta   { padding: 0.8rem 1.75rem; }
+
+  .hero-right { padding: 2.5rem 1.25rem 3rem; border-left: none; border-top: 1px solid var(--light-gray); width: 100%; }
+  .hero-wip   { padding: 1.5rem; }
+
+  /* Stats */
+  .hero-stats { grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  .stat-num   { font-size: 2.5rem; }
+  .stat-label { font-size: 0.68rem; }
+
+  /* About */
+  .about-grid       { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-text p     { font-size: 0.95rem; }
+  .info-key         { min-width: 72px; font-size: 0.67rem; }
+  .info-val         { font-size: 0.87rem; }
+
+  /* Projects → single column */
+  .projects-grid  { grid-template-columns: 1fr; border: none; }
+  .project-card   { border-right: none; border: 1px solid var(--light-gray); margin-bottom: 0.75rem; padding: 1.75rem 1.25rem; }
+  .project-card:last-child { margin-bottom: 0; }
+
+  /* Skills → single column */
+  .services-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+  /* Resume */
+  .resume-grid    { grid-template-columns: 1fr; gap: 3rem; }
+  .timeline-item  { grid-template-columns: 70px 1fr; gap: 0.75rem; padding: 1.25rem 0; }
+  .courses-grid   { grid-template-columns: 1fr; }
+
+  /* Contact */
+  .contact-grid       { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-text       { font-size: 0.93rem; }
+  .contact-link-value { font-size: 0.82rem; }
+
+  /* Footer stacks */
+  footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.4rem; text-align: center; }
+}
