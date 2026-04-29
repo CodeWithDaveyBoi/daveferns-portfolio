@@ -137,7 +137,7 @@ nav {
 .hero-left {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 8rem 4rem 4rem;
   background: var(--white);
   min-width: 0;
@@ -186,6 +186,43 @@ nav {
 
 .hero-cta:hover { background: var(--black); color: var(--white); }
 
+.hero-quote {
+  border-top: 1px solid var(--light-gray);
+  padding-top: 1.75rem;
+  margin-top: auto;
+}
+
+.hero-quote blockquote {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--black);
+  font-weight: 300;
+  font-style: italic;
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.hero-quote blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: var(--accent);
+}
+
+.hero-quote cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-style: normal;
+  padding-left: 1.1rem;
+}
+
 .hero-right {
   display: flex;
   flex-direction: column;
@@ -215,6 +252,131 @@ nav {
 }
 
 .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* ═══ HERO — CURRENTLY WORKING ON ═══ */
+.hero-wip {
+  padding: 2rem;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  margin-bottom: 1.25rem;
+}
+
+.wip-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.wip-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.wip-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  animation: pulse 2s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.wip-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.wip-item:last-child { border-bottom: none; padding-bottom: 0; }
+.wip-item:first-of-type { padding-top: 0; }
+
+.wip-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 0.2rem;
+}
+
+.wip-desc {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ═══ HERO — PROJECT LINKS ═══ */
+.hero-project-links {
+  margin-bottom: 2.5rem;
+}
+
+.hpl-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.hpl-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--light-gray);
+  text-decoration: none;
+  transition: padding-left 0.2s ease;
+  gap: 1rem;
+}
+
+.hpl-row:hover { padding-left: 0.5rem; }
+
+.hpl-left { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+
+.hpl-num {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--light-gray);
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.hpl-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hpl-row:hover .hpl-name { color: var(--accent); }
+
+.hpl-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gray);
+  flex-shrink: 0;
+  font-weight: 400;
+}
 
 /* ═══ SECTIONS ═══ */
 section { padding: 7rem 4rem; }
@@ -406,6 +568,7 @@ footer { background: var(--black); padding: 2rem 4rem; display: flex; align-item
   .hero-cta { padding: 0.8rem 1.75rem; }
 
   .hero-right { padding: 2.5rem 1.25rem 3rem; border-left: none; border-top: 1px solid var(--light-gray); width: 100%; }
+  .hero-wip { padding: 1.5rem; }
   .hero-stats { grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
   .stat-num { font-size: 2.5rem; }
   .stat-label { font-size: 0.68rem; }
@@ -461,12 +624,64 @@ footer { background: var(--black); padding: 2rem 4rem; display: flex; align-item
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
-    <p class="hero-tag">Available for opportunities</p>
-    <h1 class="hero-name">Dave<br>Fernandes</h1>
-    <p class="hero-desc">MCA graduate &amp; aspiring Prompt, AI/ML Engineer with a curiosity for technology, problem-solving, and building things that matter. Based in Pune, India.</p>
-    <a href="#contact" class="hero-cta">Get in touch →</a>
+    <div class="hero-top">
+      <p class="hero-tag">Available for opportunities</p>
+      <h1 class="hero-name">Dave<br>Fernandes</h1>
+      <p class="hero-desc">MCA graduate &amp; aspiring Prompt, AI/ML Engineer with a curiosity for technology, problem-solving, and building things that matter. Based in Pune, India.</p>
+      <a href="#contact" class="hero-cta">Get in touch →</a>
+    </div>
+    <div class="hero-quote">
+      <blockquote>
+        "There is nothing impossible to him who will try"
+        <cite>— Alexander the Great</cite>
+      </blockquote>
+    </div>
   </div>
   <div class="hero-right">
+
+    <!-- Currently Working On -->
+    <div class="hero-wip">
+      <div class="wip-label">
+        <span class="wip-pulse"></span>
+        Currently working on
+      </div>
+      <div class="wip-item">
+        <div class="wip-title">Portfolio Website</div>
+        <div class="wip-desc">Personal portfolio built with HTML &amp; CSS — the one you're looking at right now.</div>
+      </div>
+      <div class="wip-item">
+        <div class="wip-title">AI/ML Coursework</div>
+        <div class="wip-desc">Exploring machine learning fundamentals as part of MCA curriculum at Trinity.</div>
+      </div>
+    </div>
+
+    <!-- Quick Project Links -->
+    <div class="hero-project-links">
+      <div class="hpl-label">Projects</div>
+      <a class="hpl-row" href="#projects">
+        <div class="hpl-left">
+          <span class="hpl-num">01</span>
+          <span class="hpl-name">Flappy Bird Clone</span>
+        </div>
+        <span class="hpl-tag">Android · Java</span>
+      </a>
+      <a class="hpl-row" href="#projects">
+        <div class="hpl-left">
+          <span class="hpl-num">02</span>
+          <span class="hpl-name">AutoMarket Website</span>
+        </div>
+        <span class="hpl-tag">HTML · CSS</span>
+      </a>
+      <a class="hpl-row" href="#projects">
+        <div class="hpl-left">
+          <span class="hpl-num">03</span>
+          <span class="hpl-name">Blog Website</span>
+        </div>
+        <span class="hpl-tag">HTML · CSS</span>
+      </a>
+    </div>
+
+    <!-- Stats + Location -->
     <div class="hero-stats">
       <div>
         <div class="stat-num">3+</div>
@@ -489,6 +704,7 @@ footer { background: var(--black); padding: 2rem 4rem; display: flex; align-item
       <span class="dot"></span>
       Pune, Maharashtra, India
     </div>
+
   </div>
 </section>
 
@@ -505,7 +721,7 @@ footer { background: var(--black); padding: 2rem 4rem; display: flex; align-item
     <div class="about-info reveal reveal-delay-2">
       <div class="info-row"><span class="info-key">Status</span><span class="info-val">MCA Graduate, Fresher</span></div>
       <div class="info-row"><span class="info-key">Location</span><span class="info-val">Pune, Maharashtra, India</span></div>
-      <div class="info-row"><span class="info-key">Email</span><span class="info-val"><a href="mailto:Davefernsbinance@gmail.com">Davefernsbinance@gmail.com</a></span></div>
+      <div class="info-row"><span class="info-key">Email</span><span class="info-val"><a href="mailto:daveyfernandes@gmail.com">daveyfernandes@gmail.com</a></span></div>
       <div class="info-row"><span class="info-key">Phone</span><span class="info-val">+91 88885 68560</span></div>
       <div class="info-row"><span class="info-key">LinkedIn</span><span class="info-val"><a href="https://www.linkedin.com/in/dave-fernandes2003" target="_blank">dave-fernandes2003</a></span></div>
       <div class="info-row"><span class="info-key">Languages</span><span class="info-val">English, Hindi</span></div>
@@ -661,9 +877,9 @@ footer { background: var(--black); padding: 2rem 4rem; display: flex; align-item
   <div class="contact-grid">
     <p class="contact-text reveal reveal-delay-1">I'm currently open to internships, entry-level roles, and freelance opportunities. If you think we'd be a good fit, I'd love to hear from you.</p>
     <div class="reveal reveal-delay-2">
-      <a class="contact-link-row" href="mailto:Davefernsbinance@gmail.com">
+      <a class="contact-link-row" href="mailto:daveyfernandes@gmail.com">
         <span class="contact-link-label">Email</span>
-        <span class="contact-link-value">Davefernsbinance@gmail.com</span>
+        <span class="contact-link-value">daveyfernandes@gmail.com</span>
         <span class="contact-arrow">→</span>
       </a>
       <a class="contact-link-row" href="tel:+918888568560">
