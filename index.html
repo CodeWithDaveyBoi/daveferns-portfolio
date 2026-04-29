@@ -1,938 +1,658 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dave Fernandes — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --bg: #F7F5F1;
-  --white: #FFFFFF;
-  --black: #0D0D0D;
-  --gray: #6B6B6B;
-  --light-gray: #E2DED8;
-  --accent: #C8503A;
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-}
+  <!-- ============================================================
+       META & PAGE SETUP
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dave Fernandes — Portfolio</title>
+
+  <!-- Google Fonts — Bebas Neue (headings) + DM Sans (body) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Main stylesheet — all styles live in style.css -->
+  <link rel="stylesheet" href="style.css" />
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
-
-body {
-  background: var(--bg);
-  color: var(--black);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* ═══ NAV ═══ */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 4rem;
-  background: rgba(247,245,241,0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
-  color: var(--black);
-  text-decoration: none;
-  flex-shrink: 0;
-}
-
-.nav-links { display: flex; gap: 2.5rem; list-style: none; }
-
-.nav-links a {
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gray);
-  text-decoration: none;
-  transition: color 0.2s;
-  white-space: nowrap;
-}
-
-.nav-links a:hover { color: var(--black); }
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 6px;
-}
-
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 1.5px;
-  background: var(--black);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform-origin: center;
-}
-
-.hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-.mobile-drawer {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 190;
-  background: rgba(247,245,241,0.99);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 5rem 1.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  transform: translateY(-110%);
-  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.mobile-drawer.open { transform: translateY(0); }
-
-.mobile-drawer a {
-  font-size: 0.85rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gray);
-  text-decoration: none;
-  padding: 1.1rem 0;
-  border-bottom: 1px solid var(--light-gray);
-  transition: color 0.2s;
-}
-
-.mobile-drawer a:last-child { border-bottom: none; }
-.mobile-drawer a:hover { color: var(--black); }
-
-/* ═══ HERO ═══ */
-#hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.hero-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 8rem 4rem 4rem;
-  background: var(--white);
-  min-width: 0;
-}
-
-.hero-tag {
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-
-.hero-name {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 7vw, 9rem);
-  line-height: 0.92;
-  color: var(--black);
-  margin-bottom: 2.5rem;
-  word-break: break-word;
-}
-
-.hero-desc {
-  font-size: 1rem;
-  line-height: 1.75;
-  color: var(--gray);
-  max-width: 380px;
-  margin-bottom: 3rem;
-  font-weight: 300;
-}
-
-.hero-cta {
-  display: inline-block;
-  padding: 0.85rem 2.5rem;
-  border: 1px solid var(--black);
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: var(--black);
-  text-decoration: none;
-  transition: background 0.25s, color 0.25s;
-  width: fit-content;
-}
-
-.hero-cta:hover { background: var(--black); color: var(--white); }
-
-.hero-quote {
-  border-top: 1px solid var(--light-gray);
-  padding-top: 1.75rem;
-  margin-top: auto;
-}
-
-.hero-quote blockquote {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--black);
-  font-weight: 300;
-  font-style: italic;
-  position: relative;
-  padding-left: 1.1rem;
-}
-
-.hero-quote blockquote::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.2em;
-  bottom: 0.2em;
-  width: 2px;
-  background: var(--accent);
-}
-
-.hero-quote cite {
-  display: block;
-  margin-top: 0.6rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gray);
-  font-style: normal;
-  padding-left: 1.1rem;
-}
-
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 8rem 4rem 4rem;
-  background: var(--bg);
-  border-left: 1px solid var(--light-gray);
-  min-width: 0;
-}
-
-.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
-
-.stat-num { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; color: var(--black); }
-
-.stat-label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); margin-top: 0.3rem; }
-
-.hero-location {
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gray);
-  border-top: 1px solid var(--light-gray);
-  padding-top: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-
-/* ═══ HERO — CURRENTLY WORKING ON ═══ */
-.hero-wip {
-  padding: 2rem;
-  background: var(--white);
-  border: 1px solid var(--light-gray);
-  margin-bottom: 1.25rem;
-}
-
-.wip-label {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gray);
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-}
-
-.wip-pulse {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-  position: relative;
-}
-
-.wip-pulse::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 1.5px solid var(--accent);
-  animation: pulse 2s ease-out infinite;
-  opacity: 0;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.8); opacity: 0.8; }
-  100% { transform: scale(2); opacity: 0; }
-}
-
-.wip-item {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.wip-item:last-child { border-bottom: none; padding-bottom: 0; }
-.wip-item:first-of-type { padding-top: 0; }
-
-.wip-title {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--black);
-  margin-bottom: 0.2rem;
-}
-
-.wip-desc {
-  font-size: 0.8rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.5;
-}
-
-/* ═══ HERO — PROJECT LINKS ═══ */
-.hero-project-links {
-  margin-bottom: 2.5rem;
-}
-
-.hpl-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gray);
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.hpl-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--light-gray);
-  text-decoration: none;
-  transition: padding-left 0.2s ease;
-  gap: 1rem;
-}
-
-.hpl-row:hover { padding-left: 0.5rem; }
-
-.hpl-left { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
-
-.hpl-num {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  color: var(--light-gray);
-  flex-shrink: 0;
-  letter-spacing: 0.05em;
-}
-
-.hpl-name {
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--black);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.hpl-row:hover .hpl-name { color: var(--accent); }
-
-.hpl-tag {
-  font-size: 0.68rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--gray);
-  flex-shrink: 0;
-  font-weight: 400;
-}
-
-/* ═══ SECTIONS ═══ */
-section { padding: 7rem 4rem; }
-
-.section-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.section-heading {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 5rem);
-  line-height: 1;
-  color: var(--black);
-  margin-bottom: 4rem;
-}
-
-/* ═══ ABOUT ═══ */
-#about { background: var(--white); border-bottom: 1px solid var(--light-gray); }
-
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-
-.about-text p { font-size: 1.05rem; line-height: 1.8; color: var(--gray); font-weight: 300; margin-bottom: 1.25rem; }
-.about-text p strong { color: var(--black); font-weight: 500; }
-
-.info-row { display: flex; align-items: baseline; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--light-gray); }
-.info-row:first-child { border-top: 1px solid var(--light-gray); }
-
-.info-key { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); min-width: 90px; flex-shrink: 0; }
-.info-val { font-size: 0.95rem; color: var(--black); }
-.info-val a { color: var(--accent); text-decoration: none; }
-.info-val a:hover { text-decoration: underline; }
-
-/* ═══ PROJECTS ═══ */
-#projects { background: var(--bg); border-bottom: 1px solid var(--light-gray); }
-
-.projects-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--light-gray); }
-
-.project-card {
-  padding: 2.5rem;
-  border-right: 1px solid var(--light-gray);
-  background: var(--white);
-  transition: background 0.25s;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.project-card:last-child { border-right: none; }
-.project-card:hover { background: var(--black); }
-.project-card:hover .project-num,
-.project-card:hover .project-title,
-.project-card:hover .project-desc { color: var(--white); }
-.project-card:hover .project-tag { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.2); }
-
-.project-num { font-family: var(--font-display); font-size: 1rem; color: var(--light-gray); letter-spacing: 0.06em; transition: color 0.25s; }
-.project-title { font-family: var(--font-display); font-size: 1.75rem; color: var(--black); line-height: 1.1; transition: color 0.25s; }
-.project-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.65; font-weight: 300; flex: 1; transition: color 0.25s; }
-.project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
-.project-tag { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.7rem; border: 1px solid var(--light-gray); color: var(--gray); transition: color 0.25s, border-color 0.25s; }
-
-/* ═══ SKILLS ═══ */
-#services { background: var(--white); border-bottom: 1px solid var(--light-gray); }
-
-.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem 2.5rem; }
-
-.service-icon { width: 40px; height: 2px; background: var(--accent); margin-bottom: 1.25rem; }
-.service-title { font-family: var(--font-display); font-size: 1.4rem; color: var(--black); margin-bottom: 0.75rem; line-height: 1.1; }
-.service-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.7; font-weight: 300; }
-
-/* ═══ RESUME ═══ */
-#resume { background: var(--bg); border-bottom: 1px solid var(--light-gray); }
-
-.resume-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
-
-.resume-col-title { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); font-weight: 500; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-gray); }
-
-.timeline-item { display: grid; grid-template-columns: 100px 1fr; gap: 1.25rem; padding: 1.75rem 0; border-bottom: 1px solid var(--light-gray); }
-.timeline-item:last-child { border-bottom: none; }
-
-.timeline-year { font-size: 0.75rem; color: var(--gray); padding-top: 0.2rem; }
-.timeline-title { font-size: 1rem; font-weight: 500; color: var(--black); margin-bottom: 0.2rem; }
-.timeline-org { font-size: 0.82rem; color: var(--accent); margin-bottom: 0.4rem; }
-.timeline-desc { font-size: 0.83rem; color: var(--gray); font-weight: 300; line-height: 1.6; }
-
-.skill-row { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; border-bottom: 1px solid var(--light-gray); }
-.skill-name { font-size: 0.9rem; color: var(--black); }
-.skill-pills { display: flex; gap: 0.4rem; }
-.pill { width: 8px; height: 8px; border-radius: 50%; background: var(--light-gray); }
-.pill.filled { background: var(--accent); }
-
-.courses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 1.5rem; }
-.course-tag { padding: 0.6rem 1rem; background: var(--white); border: 1px solid var(--light-gray); font-size: 0.78rem; color: var(--gray); }
-
-/* ═══ CONTACT ═══ */
-#contact { background: var(--black); }
-#contact .section-label { color: var(--accent); }
-#contact .section-heading { color: var(--white); }
-
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end; }
-
-.contact-text { font-size: 1rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.75; }
-
-.contact-link-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.4rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  text-decoration: none;
-  transition: padding-left 0.25s;
-}
-
-.contact-link-row:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
-.contact-link-row:hover { padding-left: 0.75rem; }
-
-.contact-link-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); flex-shrink: 0; }
-.contact-link-value { font-size: 0.92rem; color: var(--white); text-align: right; word-break: break-all; }
-.contact-arrow { color: rgba(255,255,255,0.3); flex-shrink: 0; }
-
-/* ═══ FOOTER ═══ */
-footer { background: var(--black); padding: 2rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.08); }
-.footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
-.footer-name { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); }
-
-/* ═══ REVEAL ═══ */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-/* ═══════════════════════════════
-   TABLET  768px – 1023px
-═══════════════════════════════ */
-@media (max-width: 1023px) {
-  nav { padding: 1.1rem 2rem; }
-  section { padding: 5rem 2.5rem; }
-
-  #hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-left { padding: 7rem 2.5rem 3rem; }
-  .hero-right { padding: 3rem 2.5rem 4rem; border-left: none; border-top: 1px solid var(--light-gray); }
-  .hero-name { font-size: clamp(4rem, 11vw, 7rem); }
-
-  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-
-  .projects-grid { grid-template-columns: 1fr 1fr; }
-  .project-card:nth-child(2) { border-right: none; }
-  .project-card:nth-child(3) { grid-column: 1/-1; border-top: 1px solid var(--light-gray); border-right: none; }
-
-  .services-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 2rem; }
-
-  .resume-grid { grid-template-columns: 1fr; gap: 3.5rem; }
-
-  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-
-  footer { padding: 1.75rem 2.5rem; }
-}
-
-/* ═══════════════════════════════
-   MOBILE  < 768px
-═══════════════════════════════ */
-@media (max-width: 767px) {
-  nav { padding: 1rem 1.25rem; }
-  .nav-links { display: none !important; }
-  .hamburger { display: flex; }
-
-  section { padding: 3.5rem 1.25rem; }
-  .section-heading { margin-bottom: 2rem; }
-
-  #hero { grid-template-columns: 1fr; min-height: auto; }
-
-  .hero-left { padding: 5.5rem 1.25rem 2.5rem; width: 100%; }
-
-  .hero-name {
-    font-size: clamp(3rem, 14vw, 4.5rem);
-    margin-bottom: 1.5rem;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
-
-  .hero-desc { font-size: 0.95rem; margin-bottom: 2rem; max-width: 100%; }
-  .hero-cta { padding: 0.8rem 1.75rem; }
-
-  .hero-right { padding: 2.5rem 1.25rem 3rem; border-left: none; border-top: 1px solid var(--light-gray); width: 100%; }
-  .hero-wip { padding: 1.5rem; }
-  .hero-stats { grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-  .stat-num { font-size: 2.5rem; }
-  .stat-label { font-size: 0.68rem; }
-
-  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .about-text p { font-size: 0.95rem; }
-  .info-key { min-width: 72px; font-size: 0.67rem; }
-  .info-val { font-size: 0.87rem; }
-
-  .projects-grid { grid-template-columns: 1fr; border: none; }
-  .project-card { border-right: none; border: 1px solid var(--light-gray); margin-bottom: 0.75rem; padding: 1.75rem 1.25rem; }
-  .project-card:last-child { margin-bottom: 0; }
-
-  .services-grid { grid-template-columns: 1fr; gap: 2rem; }
-
-  .resume-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .timeline-item { grid-template-columns: 70px 1fr; gap: 0.75rem; padding: 1.25rem 0; }
-  .courses-grid { grid-template-columns: 1fr; }
-
-  .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .contact-text { font-size: 0.93rem; }
-  .contact-link-value { font-size: 0.82rem; }
-
-  footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.4rem; text-align: center; }
-}
-</style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#hero" class="nav-logo">Dave Fernandes</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#services">Skills</a></li>
-    <li><a href="#resume">Resume</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
 
-<div class="mobile-drawer" id="drawer">
-  <a href="#about">About</a>
-  <a href="#projects">Projects</a>
-  <a href="#services">Skills</a>
-  <a href="#resume">Resume</a>
-  <a href="#contact">Contact</a>
-</div>
+  <!-- ============================================================
+       NAVIGATION
+       — .nav-logo  : site name / home link
+       — .nav-links : desktop anchor links (hidden on mobile)
+       — .hamburger : mobile menu toggle (visible on mobile only)
+       ============================================================ -->
+  <nav>
+    <a href="#hero" class="nav-logo">Dave Fernandes</a>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-left">
-    <div class="hero-top">
-      <p class="hero-tag">Available for opportunities</p>
-      <h1 class="hero-name">Dave<br>Fernandes</h1>
-      <p class="hero-desc">MCA graduate &amp; aspiring Prompt, AI/ML Engineer with a curiosity for technology, problem-solving, and building things that matter. Based in Pune, India.</p>
-      <a href="#contact" class="hero-cta">Get in touch →</a>
-    </div>
-    <div class="hero-quote">
-      <blockquote>
-        "There is nothing impossible to him who will try"
-        <cite>— Alexander the Great</cite>
-      </blockquote>
-    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#services">Skills</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+
+  <!-- ============================================================
+       MOBILE NAVIGATION DRAWER
+       — Slides down when hamburger is clicked (controlled by JS)
+       — To add a nav link: duplicate an <a> tag below
+       ============================================================ -->
+  <div class="mobile-drawer" id="drawer">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#services">Skills</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
   </div>
-  <div class="hero-right">
 
-    <!-- Currently Working On -->
-    <div class="hero-wip">
-      <div class="wip-label">
-        <span class="wip-pulse"></span>
-        Currently working on
-      </div>
-      <div class="wip-item">
-        <div class="wip-title">Portfolio Website</div>
-        <div class="wip-desc">Personal portfolio built with HTML &amp; CSS — the one you're looking at right now.</div>
-      </div>
-      <div class="wip-item">
-        <div class="wip-title">AI/ML Coursework</div>
-        <div class="wip-desc">Exploring machine learning fundamentals as part of MCA curriculum at Trinity.</div>
-      </div>
-    </div>
 
-    <!-- Quick Project Links -->
-    <div class="hero-project-links">
-      <div class="hpl-label">Projects</div>
-      <a class="hpl-row" href="#projects">
-        <div class="hpl-left">
-          <span class="hpl-num">01</span>
-          <span class="hpl-name">Flappy Bird Clone</span>
+  <!-- ============================================================
+       HERO SECTION
+       — Two-column layout (stacks on mobile/tablet)
+         Left  : name, bio, CTA button, motivational quote
+         Right : completed projects, WIP card, stats, location
+       ============================================================ -->
+  <section id="hero">
+
+    <!-- ── HERO LEFT COLUMN ── -->
+    <div class="hero-left">
+
+      <!-- Top block: name, bio, CTA -->
+      <div class="hero-top">
+
+        <!-- Availability badge — edit text to change status -->
+        <p class="hero-tag">Available for opportunities</p>
+
+        <!-- Display name -->
+        <h1 class="hero-name">Dave<br>Fernandes</h1>
+
+        <!-- Short bio / tagline -->
+        <p class="hero-desc">
+          MCA graduate &amp; aspiring Prompt, AI/ML Engineer with a curiosity
+          for technology, problem-solving, and building things that matter.
+          Based in Pune, India.
+        </p>
+
+        <!-- Primary call-to-action button -->
+        <a href="#contact" class="hero-cta">Get in touch →</a>
+
+      </div><!-- end .hero-top -->
+
+      <!-- Bottom block: motivational quote (pinned to bottom-left)
+           — To change: edit text inside <blockquote> and <cite> -->
+      <div class="hero-quote">
+        <blockquote>
+          "There is nothing impossible to him who will try"
+          <cite>— Alexander the Great</cite>
+        </blockquote>
+      </div>
+
+    </div><!-- end .hero-left -->
+
+
+    <!-- ── HERO RIGHT COLUMN ── -->
+    <div class="hero-right">
+
+      <!-- Completed Project Links
+           — Each .hc-row is a clickable project link
+           — Replace href="#" with your actual GitHub or live URL
+           — To add a project: duplicate an .hc-row block -->
+      <div class="hero-completed">
+        <div class="hc-label">Completed Projects</div>
+
+        <a class="hc-row" href="#" target="_blank">
+          <div class="hc-left">
+            <div class="hc-title">Flappy Bird Clone</div>
+            <div class="hc-meta">Android Studio · Java · Game Dev</div>
+          </div>
+          <div class="hc-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <a class="hc-row" href="#" target="_blank">
+          <div class="hc-left">
+            <div class="hc-title">AutoMarket Website</div>
+            <div class="hc-meta">HTML · CSS · UI Design</div>
+          </div>
+          <div class="hc-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <a class="hc-row" href="#" target="_blank">
+          <div class="hc-left">
+            <div class="hc-title">Blog Website</div>
+            <div class="hc-meta">HTML · CSS · Group Project</div>
+          </div>
+          <div class="hc-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+      </div><!-- end .hero-completed -->
+
+
+      <!-- Currently Working On Card
+           — Pulsing dot indicates active in-progress work
+           — To update: edit .wip-title and .wip-desc text
+           — To add an item: duplicate a .wip-item block -->
+      <div class="hero-wip">
+        <div class="wip-label">
+          <span class="wip-pulse"></span>
+          Currently working on
         </div>
-        <span class="hpl-tag">Android · Java</span>
-      </a>
-      <a class="hpl-row" href="#projects">
-        <div class="hpl-left">
-          <span class="hpl-num">02</span>
-          <span class="hpl-name">AutoMarket Website</span>
+
+        <div class="wip-item">
+          <div class="wip-title">Portfolio Website</div>
+          <div class="wip-desc">Personal portfolio built with HTML &amp; CSS — the one you're looking at right now.</div>
         </div>
-        <span class="hpl-tag">HTML · CSS</span>
-      </a>
-      <a class="hpl-row" href="#projects">
-        <div class="hpl-left">
-          <span class="hpl-num">03</span>
-          <span class="hpl-name">Blog Website</span>
+
+        <div class="wip-item">
+          <div class="wip-title">AI/ML Coursework</div>
+          <div class="wip-desc">Exploring machine learning fundamentals as part of MCA curriculum at Trinity.</div>
         </div>
-        <span class="hpl-tag">HTML · CSS</span>
-      </a>
-    </div>
 
-    <!-- Stats + Location -->
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">3+</div>
-        <div class="stat-label">Projects Built</div>
-      </div>
-      <div>
-        <div class="stat-num">7.1</div>
-        <div class="stat-label">BCA GPA</div>
-      </div>
-      <div>
-        <div class="stat-num">6+</div>
-        <div class="stat-label">Courses Completed</div>
-      </div>
-      <div>
-        <div class="stat-num">3</div>
-        <div class="stat-label">Languages</div>
-      </div>
-    </div>
-    <div class="hero-location">
-      <span class="dot"></span>
-      Pune, Maharashtra, India
-    </div>
+      </div><!-- end .hero-wip -->
 
-  </div>
-</section>
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label reveal">About me</p>
-  <h2 class="section-heading reveal reveal-delay-1">Who I am</h2>
-  <div class="about-grid">
-    <div class="about-text reveal reveal-delay-1">
-      <p>I'm <strong>Dave Fernandes</strong>, an MCA(Engg) graduate from Trinity Academy of Engineering, Pune, with a BCA from SICSR — Symbiosis Institute of Computer Studies and Research. I'm applying as a fresher, eager to learn and grow.</p>
-      <p>I'm someone who brings <strong>strong communication skills, teamwork, and genuine curiosity</strong> to everything I do. Whether it's writing code, debugging a project, or brainstorming ideas, I show up with a positive mindset and a drive to be an asset.</p>
-      <p>Outside of tech, I'm into <strong>powerlifting, sports, playing the guitar, and reading inspirational and educational books</strong>. I believe health and mental well-being go hand in hand with doing great work.</p>
-    </div>
-    <div class="about-info reveal reveal-delay-2">
-      <div class="info-row"><span class="info-key">Status</span><span class="info-val">MCA Graduate, Fresher</span></div>
-      <div class="info-row"><span class="info-key">Location</span><span class="info-val">Pune, Maharashtra, India</span></div>
-      <div class="info-row"><span class="info-key">Email</span><span class="info-val"><a href="mailto:daveyfernandes@gmail.com">daveyfernandes@gmail.com</a></span></div>
-      <div class="info-row"><span class="info-key">Phone</span><span class="info-val">+91 88885 68560</span></div>
-      <div class="info-row"><span class="info-key">LinkedIn</span><span class="info-val"><a href="https://www.linkedin.com/in/dave-fernandes2003" target="_blank">dave-fernandes2003</a></span></div>
-      <div class="info-row"><span class="info-key">Languages</span><span class="info-val">English, Hindi</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <p class="section-label reveal">Work</p>
-  <h2 class="section-heading reveal reveal-delay-1">Projects</h2>
-  <div class="projects-grid">
-    <div class="project-card reveal reveal-delay-1">
-      <div class="project-num">01</div>
-      <div class="project-title">Flappy Bird Clone</div>
-      <p class="project-desc">A semester-end Android game application built as a Flappy Bird clone. Developed using Android Studio, covering game logic, UI design, and mobile interaction patterns.</p>
-      <div class="project-tags">
-        <span class="project-tag">Android Studio</span>
-        <span class="project-tag">Java</span>
-        <span class="project-tag">Game Dev</span>
-      </div>
-    </div>
-    <div class="project-card reveal reveal-delay-2">
-      <div class="project-num">02</div>
-      <div class="project-title">AutoMarket Website</div>
-      <p class="project-desc">A fully designed website for pre-owned automobile buying and selling. Built with HTML and CSS, focusing on clean UI layout, product listing pages, and usability.</p>
-      <div class="project-tags">
-        <span class="project-tag">HTML</span>
-        <span class="project-tag">CSS</span>
-        <span class="project-tag">UI Design</span>
-      </div>
-    </div>
-    <div class="project-card reveal reveal-delay-3">
-      <div class="project-num">03</div>
-      <div class="project-title">Blog Website</div>
-      <p class="project-desc">A collaborative group project — a multi-page blog website designed and built from scratch using HTML and CSS, with attention to typography, layout, and content structure.</p>
-      <div class="project-tags">
-        <span class="project-tag">HTML</span>
-        <span class="project-tag">CSS</span>
-        <span class="project-tag">Teamwork</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="services">
-  <p class="section-label reveal">Capabilities</p>
-  <h2 class="section-heading reveal reveal-delay-1">What I bring</h2>
-  <div class="services-grid">
-    <div class="service-item reveal reveal-delay-1">
-      <div class="service-icon"></div>
-      <div class="service-title">Frontend Development</div>
-      <p class="service-desc">Building responsive, user-friendly web interfaces using HTML, CSS, and React.js with a strong eye for design aesthetics and clean markup.</p>
-    </div>
-    <div class="service-item reveal reveal-delay-2">
-      <div class="service-icon"></div>
-      <div class="service-title">Backend &amp; Programming</div>
-      <p class="service-desc">Proficient in Python and Java with a solid grounding in Object-Oriented Programming, scripting, and problem-solving fundamentals.</p>
-    </div>
-    <div class="service-item reveal reveal-delay-3">
-      <div class="service-icon"></div>
-      <div class="service-title">Prompt Engineering</div>
-      <p class="service-desc">Hands-on experience with AI models including ChatGPT, Claude, Deepseek &amp; Perplexity — building effective prompts for real-world tasks.</p>
-    </div>
-    <div class="service-item reveal reveal-delay-1">
-      <div class="service-icon"></div>
-      <div class="service-title">AI &amp; Automation</div>
-      <p class="service-desc">Completed courses in Generative AI, Prompt Engineering, and Selenium IDE for test automation — exploring the intersection of AI and modern development.</p>
-    </div>
-    <div class="service-item reveal reveal-delay-2">
-      <div class="service-icon"></div>
-      <div class="service-title">Mobile Development</div>
-      <p class="service-desc">Built an Android application using Android Studio, gaining practical exposure to mobile UI/UX patterns and app lifecycle management.</p>
-    </div>
-    <div class="service-item reveal reveal-delay-3">
-      <div class="service-icon"></div>
-      <div class="service-title">Soft Skills</div>
-      <p class="service-desc">Strong communicator, team player, and problem-solver with leadership qualities. Experience in youth counselling and social volunteering.</p>
-    </div>
-  </div>
-</section>
-
-<!-- RESUME -->
-<section id="resume">
-  <p class="section-label reveal">Background</p>
-  <h2 class="section-heading reveal reveal-delay-1">Resume</h2>
-  <div class="resume-grid">
-    <div>
-      <div class="resume-col-title reveal">Education</div>
-      <div class="timeline-item reveal reveal-delay-1">
-        <div class="timeline-year">2024 – Present</div>
+      <!-- Stats Grid
+           — To update: edit the number inside .stat-num
+           — To change a label: edit .stat-label text -->
+      <div class="hero-stats">
         <div>
-          <div class="timeline-title">Masters of Computer Application (Engg)</div>
-          <div class="timeline-org">Trinity Academy of Engineering, Pune</div>
-          <div class="timeline-desc">MCA — currently pursuing.</div>
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Projects Built</div>
         </div>
-      </div>
-      <div class="timeline-item reveal reveal-delay-2">
-        <div class="timeline-year">2021 – 2024</div>
         <div>
-          <div class="timeline-title">Bachelors of Computer Application</div>
-          <div class="timeline-org">SICSR, Symbiosis — Pune</div>
-          <div class="timeline-desc">BCA with a 7.1 GPA. June 2024 passout.</div>
+          <div class="stat-num">7.1</div>
+          <div class="stat-label">BCA GPA</div>
         </div>
-      </div>
-      <div class="timeline-item reveal reveal-delay-3">
-        <div class="timeline-year">12th Std</div>
         <div>
-          <div class="timeline-title">Higher Secondary Certificate</div>
-          <div class="timeline-org">St. Vincent's College, Pune</div>
-          <div class="timeline-desc">First class with Distinction — 77.14%</div>
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Courses Completed</div>
         </div>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-year">10th Std</div>
         <div>
-          <div class="timeline-title">Secondary School Certificate</div>
-          <div class="timeline-org">St. Vincent's High School, Pune</div>
-          <div class="timeline-desc">First class — 65.80%</div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Languages</div>
+        </div>
+      </div><!-- end .hero-stats -->
+
+      <!-- Location tag -->
+      <div class="hero-location">
+        <span class="dot"></span>
+        Pune, Maharashtra, India
+      </div>
+
+    </div><!-- end .hero-right -->
+
+  </section><!-- end #hero -->
+
+
+  <!-- ============================================================
+       ABOUT SECTION
+       — Left : bio paragraphs
+       — Right: key info rows (status, email, LinkedIn, etc.)
+       — To add an info row: duplicate a .info-row block
+       ============================================================ -->
+  <section id="about">
+    <p class="section-label reveal">About me</p>
+    <h2 class="section-heading reveal reveal-delay-1">Who I am</h2>
+
+    <div class="about-grid">
+
+      <!-- Bio copy -->
+      <div class="about-text reveal reveal-delay-1">
+        <p>
+          I'm <strong>Dave Fernandes</strong>, an MCA(Engg) graduate from Trinity Academy
+          of Engineering, Pune, with a BCA from SICSR — Symbiosis Institute of Computer
+          Studies and Research. I'm applying as a fresher, eager to learn and grow.
+        </p>
+        <p>
+          I'm someone who brings <strong>strong communication skills, teamwork, and genuine
+          curiosity</strong> to everything I do. Whether it's writing code, debugging a project,
+          or brainstorming ideas, I show up with a positive mindset and a drive to be an asset.
+        </p>
+        <p>
+          Outside of tech, I'm into <strong>powerlifting, sports, playing the guitar, and reading
+          inspirational and educational books</strong>. I believe health and mental well-being go
+          hand in hand with doing great work.
+        </p>
+      </div>
+
+      <!-- Key info rows -->
+      <div class="about-info reveal reveal-delay-2">
+        <div class="info-row">
+          <span class="info-key">Status</span>
+          <span class="info-val">MCA Graduate, Fresher</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Location</span>
+          <span class="info-val">Pune, Maharashtra, India</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Email</span>
+          <span class="info-val">
+            <a href="mailto:Davefernsbinance@gmail.com">Davefernsbinance@gmail.com</a>
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Phone</span>
+          <span class="info-val">+91 88885 68560</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">LinkedIn</span>
+          <span class="info-val">
+            <a href="https://www.linkedin.com/in/dave-fernandes2003" target="_blank">dave-fernandes2003</a>
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Languages</span>
+          <span class="info-val">English, Hindi</span>
         </div>
       </div>
+
     </div>
-    <div>
-      <div class="resume-col-title reveal">Technical Skills</div>
-      <div class="reveal reveal-delay-1">
-        <div class="skill-row"><span class="skill-name">Python</span><div class="skill-pills"><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div></div></div>
-        <div class="skill-row"><span class="skill-name">HTML &amp; CSS</span><div class="skill-pills"><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Java / OOP</span><div class="skill-pills"><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div><div class="pill"></div></div></div>
-        <div class="skill-row"><span class="skill-name">ML Model Building</span><div class="skill-pills"><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div><div class="pill"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Blender 3D</span><div class="skill-pills"><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div><div class="pill"></div><div class="pill"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Microsoft Office</span><div class="skill-pills"><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div></div></div>
+  </section><!-- end #about -->
+
+
+  <!-- ============================================================
+       PROJECTS SECTION
+       — Three-column card grid; hover inverts card to dark
+       — To add a project: duplicate a .project-card block
+       — Update project number, title, description, and tags
+       ============================================================ -->
+  <section id="projects">
+    <p class="section-label reveal">Work</p>
+    <h2 class="section-heading reveal reveal-delay-1">Projects</h2>
+
+    <div class="projects-grid">
+
+      <!-- Project 01 -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-num">01</div>
+        <div class="project-title">Flappy Bird Clone</div>
+        <p class="project-desc">
+          A semester-end Android game application built as a Flappy Bird clone. Developed using
+          Android Studio, covering game logic, UI design, and mobile interaction patterns.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">Android Studio</span>
+          <span class="project-tag">Java</span>
+          <span class="project-tag">Game Dev</span>
+        </div>
       </div>
-      <div class="resume-col-title reveal" style="margin-top:3rem;">Courses &amp; Certifications</div>
-      <div class="courses-grid reveal reveal-delay-1">
-        <div class="course-tag">Generative AI &amp; Prompt Engineering</div>
-        <div class="course-tag">Python Bootcamp (2024)</div>
-        <div class="course-tag">Claude Code — Practical Guide</div>
-        <div class="course-tag">AI Engineering Agentic Track</div>
-        <div class="course-tag">ChatGPT for Web Design</div>
-        <div class="course-tag">Git and GitHub Essentials</div>
-        <div class="course-tag">Basics of Blender 3D</div>
-        <div class="course-tag">Android Studio</div>
+
+      <!-- Project 02 -->
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-num">02</div>
+        <div class="project-title">AutoMarket Website</div>
+        <p class="project-desc">
+          A fully designed website for pre-owned automobile buying and selling. Built with HTML
+          and CSS, focusing on clean UI layout, product listing pages, and usability.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">HTML</span>
+          <span class="project-tag">CSS</span>
+          <span class="project-tag">UI Design</span>
+        </div>
       </div>
+
+      <!-- Project 03 -->
+      <div class="project-card reveal reveal-delay-3">
+        <div class="project-num">03</div>
+        <div class="project-title">Blog Website</div>
+        <p class="project-desc">
+          A collaborative group project — a multi-page blog website designed and built from scratch
+          using HTML and CSS, with attention to typography, layout, and content structure.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">HTML</span>
+          <span class="project-tag">CSS</span>
+          <span class="project-tag">Teamwork</span>
+        </div>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section><!-- end #projects -->
 
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label reveal">Let's connect</p>
-  <h2 class="section-heading reveal reveal-delay-1">Get in touch</h2>
-  <div class="contact-grid">
-    <p class="contact-text reveal reveal-delay-1">I'm currently open to internships, entry-level roles, and freelance opportunities. If you think we'd be a good fit, I'd love to hear from you.</p>
-    <div class="reveal reveal-delay-2">
-      <a class="contact-link-row" href="mailto:daveyfernandes@gmail.com">
-        <span class="contact-link-label">Email</span>
-        <span class="contact-link-value">daveyfernandes@gmail.com</span>
-        <span class="contact-arrow">→</span>
-      </a>
-      <a class="contact-link-row" href="tel:+918888568560">
-        <span class="contact-link-label">Phone</span>
-        <span class="contact-link-value">+91 88885 68560</span>
-        <span class="contact-arrow">→</span>
-      </a>
-      <a class="contact-link-row" href="https://www.linkedin.com/in/dave-fernandes2003" target="_blank">
-        <span class="contact-link-label">LinkedIn</span>
-        <span class="contact-link-value">dave-fernandes2003</span>
-        <span class="contact-arrow">→</span>
-      </a>
+
+  <!-- ============================================================
+       SKILLS SECTION
+       — Six capability tiles in a 3-column grid
+       — To add a skill: duplicate a .service-item block
+       — Each tile has an accent line, title, and description
+       ============================================================ -->
+  <section id="services">
+    <p class="section-label reveal">Capabilities</p>
+    <h2 class="section-heading reveal reveal-delay-1">What I bring</h2>
+
+    <div class="services-grid">
+
+      <!-- Skill 01 -->
+      <div class="service-item reveal reveal-delay-1">
+        <div class="service-icon"></div>
+        <div class="service-title">Frontend Development</div>
+        <p class="service-desc">
+          Building responsive, user-friendly web interfaces using HTML, CSS, and React.js
+          with a strong eye for design aesthetics and clean markup.
+        </p>
+      </div>
+
+      <!-- Skill 02 -->
+      <div class="service-item reveal reveal-delay-2">
+        <div class="service-icon"></div>
+        <div class="service-title">Backend &amp; Programming</div>
+        <p class="service-desc">
+          Proficient in Python and Java with a solid grounding in Object-Oriented Programming,
+          scripting, and problem-solving fundamentals.
+        </p>
+      </div>
+
+      <!-- Skill 03 -->
+      <div class="service-item reveal reveal-delay-3">
+        <div class="service-icon"></div>
+        <div class="service-title">Prompt Engineering</div>
+        <p class="service-desc">
+          Hands-on experience with AI models including ChatGPT, Claude, Deepseek &amp; Perplexity
+          — building effective prompts for real-world tasks.
+        </p>
+      </div>
+
+      <!-- Skill 04 -->
+      <div class="service-item reveal reveal-delay-1">
+        <div class="service-icon"></div>
+        <div class="service-title">AI &amp; Automation</div>
+        <p class="service-desc">
+          Completed courses in Generative AI, Prompt Engineering, and Selenium IDE for test
+          automation — exploring the intersection of AI and modern development.
+        </p>
+      </div>
+
+      <!-- Skill 05 -->
+      <div class="service-item reveal reveal-delay-2">
+        <div class="service-icon"></div>
+        <div class="service-title">Mobile Development</div>
+        <p class="service-desc">
+          Built an Android application using Android Studio, gaining practical exposure to
+          mobile UI/UX patterns and app lifecycle management.
+        </p>
+      </div>
+
+      <!-- Skill 06 -->
+      <div class="service-item reveal reveal-delay-3">
+        <div class="service-icon"></div>
+        <div class="service-title">Soft Skills</div>
+        <p class="service-desc">
+          Strong communicator, team player, and problem-solver with leadership qualities.
+          Experience in youth counselling and social volunteering.
+        </p>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section><!-- end #services -->
 
-<!-- FOOTER -->
-<footer>
-  <span class="footer-copy">© 2025 Dave Fernandes. All rights reserved.</span>
-  <span class="footer-name">Dave Fernandes</span>
-</footer>
 
-<script>
-  // Scroll reveal
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  <!-- ============================================================
+       RESUME SECTION
+       — Left : education timeline entries
+       — Right: skill proficiency bars + certifications grid
+       ============================================================ -->
+  <section id="resume">
+    <p class="section-label reveal">Background</p>
+    <h2 class="section-heading reveal reveal-delay-1">Resume</h2>
 
-  // Hamburger
-  const hamburger = document.getElementById('hamburger');
-  const drawer = document.getElementById('drawer');
+    <div class="resume-grid">
 
-  hamburger.addEventListener('click', () => {
-    const open = drawer.classList.toggle('open');
-    hamburger.classList.toggle('active', open);
-    hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-  });
+      <!-- ── LEFT: Education Timeline ──
+           To add an entry: duplicate a .timeline-item block -->
+      <div class="resume-education">
+        <div class="resume-col-title reveal">Education</div>
 
-  drawer.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      drawer.classList.remove('open');
-      hamburger.classList.remove('active');
-      hamburger.setAttribute('aria-label', 'Open menu');
+        <div class="timeline-item reveal reveal-delay-1">
+          <div class="timeline-year">2024 – Present</div>
+          <div>
+            <div class="timeline-title">Masters of Computer Application (Engg)</div>
+            <div class="timeline-org">Trinity Academy of Engineering, Pune</div>
+            <div class="timeline-desc">MCA — currently pursuing.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-2">
+          <div class="timeline-year">2021 – 2024</div>
+          <div>
+            <div class="timeline-title">Bachelors of Computer Application</div>
+            <div class="timeline-org">SICSR, Symbiosis — Pune</div>
+            <div class="timeline-desc">BCA with a 7.1 GPA. June 2024 passout.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-3">
+          <div class="timeline-year">12th Std</div>
+          <div>
+            <div class="timeline-title">Higher Secondary Certificate</div>
+            <div class="timeline-org">St. Vincent's College, Pune</div>
+            <div class="timeline-desc">First class with Distinction — 77.14%</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-year">10th Std</div>
+          <div>
+            <div class="timeline-title">Secondary School Certificate</div>
+            <div class="timeline-org">St. Vincent's High School, Pune</div>
+            <div class="timeline-desc">First class — 65.80%</div>
+          </div>
+        </div>
+      </div><!-- end .resume-education -->
+
+
+      <!-- ── RIGHT: Skills & Certifications ── -->
+      <div class="resume-skills">
+
+        <!-- Skill proficiency bars
+             — "filled" pills = filled dots (out of 5 total)
+             — To add a skill: duplicate a .skill-row
+             — To adjust level: add/remove class "filled" from .pill -->
+        <div class="resume-col-title reveal">Technical Skills</div>
+        <div class="reveal reveal-delay-1">
+
+          <div class="skill-row">
+            <span class="skill-name">Python</span>
+            <div class="skill-pills">
+              <div class="pill filled"></div><div class="pill filled"></div>
+              <div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div>
+            </div>
+          </div>
+
+          <div class="skill-row">
+            <span class="skill-name">HTML &amp; CSS</span>
+            <div class="skill-pills">
+              <div class="pill filled"></div><div class="pill filled"></div>
+              <div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div>
+            </div>
+          </div>
+
+          <div class="skill-row">
+            <span class="skill-name">Java / OOP</span>
+            <div class="skill-pills">
+              <div class="pill filled"></div><div class="pill filled"></div>
+              <div class="pill filled"></div><div class="pill"></div><div class="pill"></div>
+            </div>
+          </div>
+
+          <div class="skill-row">
+            <span class="skill-name">ML Model Building</span>
+            <div class="skill-pills">
+              <div class="pill filled"></div><div class="pill filled"></div>
+              <div class="pill filled"></div><div class="pill"></div><div class="pill"></div>
+            </div>
+          </div>
+
+          <div class="skill-row">
+            <span class="skill-name">Blender 3D</span>
+            <div class="skill-pills">
+              <div class="pill filled"></div><div class="pill filled"></div>
+              <div class="pill"></div><div class="pill"></div><div class="pill"></div>
+            </div>
+          </div>
+
+          <div class="skill-row">
+            <span class="skill-name">Microsoft Office</span>
+            <div class="skill-pills">
+              <div class="pill filled"></div><div class="pill filled"></div>
+              <div class="pill filled"></div><div class="pill filled"></div><div class="pill"></div>
+            </div>
+          </div>
+
+        </div><!-- end skills block -->
+
+        <!-- Certifications & Courses
+             — To add a course: duplicate a .course-tag div -->
+        <div class="resume-col-title reveal" style="margin-top: 3rem;">
+          Courses &amp; Certifications
+        </div>
+        <div class="courses-grid reveal reveal-delay-1">
+          <div class="course-tag">Generative AI &amp; Prompt Engineering</div>
+          <div class="course-tag">Python Bootcamp (2024)</div>
+          <div class="course-tag">Claude Code — Practical Guide</div>
+          <div class="course-tag">AI Engineering Agentic Track</div>
+          <div class="course-tag">ChatGPT for Web Design</div>
+          <div class="course-tag">Git and GitHub Essentials</div>
+          <div class="course-tag">Basics of Blender 3D</div>
+          <div class="course-tag">Android Studio</div>
+        </div>
+
+      </div><!-- end .resume-skills -->
+
+    </div>
+  </section><!-- end #resume -->
+
+
+  <!-- ============================================================
+       CONTACT SECTION
+       — Dark background
+       — Left : intro copy
+       — Right: clickable contact link rows
+       — To add a contact method: duplicate a .contact-link-row
+       ============================================================ -->
+  <section id="contact">
+    <p class="section-label reveal">Let's connect</p>
+    <h2 class="section-heading reveal reveal-delay-1">Get in touch</h2>
+
+    <div class="contact-grid">
+
+      <!-- Intro copy -->
+      <p class="contact-text reveal reveal-delay-1">
+        I'm currently open to internships, entry-level roles, and freelance opportunities.
+        If you think we'd be a good fit, I'd love to hear from you.
+      </p>
+
+      <!-- Contact links -->
+      <div class="reveal reveal-delay-2">
+
+        <a class="contact-link-row" href="mailto:Davefernsbinance@gmail.com">
+          <span class="contact-link-label">Email</span>
+          <span class="contact-link-value">Davefernsbinance@gmail.com</span>
+          <span class="contact-arrow">→</span>
+        </a>
+
+        <a class="contact-link-row" href="tel:+918888568560">
+          <span class="contact-link-label">Phone</span>
+          <span class="contact-link-value">+91 88885 68560</span>
+          <span class="contact-arrow">→</span>
+        </a>
+
+        <a class="contact-link-row" href="https://www.linkedin.com/in/dave-fernandes2003" target="_blank">
+          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-value">dave-fernandes2003</span>
+          <span class="contact-arrow">→</span>
+        </a>
+
+      </div>
+
+    </div>
+  </section><!-- end #contact -->
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <span class="footer-copy">© 2025 Dave Fernandes. All rights reserved.</span>
+    <span class="footer-name">Dave Fernandes</span>
+  </footer>
+
+
+  <!-- ============================================================
+       JAVASCRIPT
+       — Scroll reveal : fades elements in on scroll
+       — Hamburger menu: opens/closes mobile nav drawer
+       ============================================================ -->
+  <script>
+
+    /* ── Scroll Reveal ──────────────────────────────────────────
+       Watches every element with class "reveal".
+       When it enters the viewport, class "visible" is added.
+       CSS in style.css handles the fade-up animation.          */
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+    /* ── Hamburger Menu ─────────────────────────────────────────
+       Toggles .open on the drawer and .active on the button.
+       Links inside the drawer also close it on tap.            */
+    const hamburger = document.getElementById('hamburger');
+    const drawer    = document.getElementById('drawer');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('open');
+      hamburger.classList.toggle('active', isOpen);
+      hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     });
-  });
 
-  document.addEventListener('click', e => {
-    if (!drawer.contains(e.target) && !hamburger.contains(e.target)) {
-      drawer.classList.remove('open');
-      hamburger.classList.remove('active');
-    }
-  });
-</script>
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-label', 'Open menu');
+      });
+    });
+
+    document.addEventListener('click', e => {
+      if (!drawer.contains(e.target) && !hamburger.contains(e.target)) {
+        drawer.classList.remove('open');
+        hamburger.classList.remove('active');
+      }
+    });
+
+  </script>
+
 </body>
 </html>
